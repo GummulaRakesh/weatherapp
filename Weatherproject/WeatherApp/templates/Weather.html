@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.app-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-button {
+    padding: 10px;
+    border: none;
+    background: #007BFF;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-button:hover {
+    background: #0056b3;
+}
+
+.weather-info {
+    /* display: none; */
+    margin-top: 20px;
+}
+
+/* .weather-info .city, */
+/* .weather-info .temperature, */
+.description {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.icon img {
+    width: 50px;
+    height: 50px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="app-title">Weather App</h1>
+        <form method="POST">
+            {% csrf_token %}
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Enter city name"  name="city">
+            <button class="search-button" type="submit">Search</button>
+        </div>
+        </form>
+        {% if weather_data %}
+        <div class="weather-info">
+            {% if weather_data.error %}
+            <div class="error">{{ weather_data.error }}</div>
+            {% else %}
+            <div class="city">City :{{ weather_data.city }}</div>
+            <div class="temperature">Temperature : {{ weather_data.temperature }}&deg;C</div>
+            <div class="feels_like">Feels Like : {{ weather_data.feels_like }}&deg;C</div>
+            <div class="Humidity">Humidity : {{ weather_data.Humidity }}%</div>
+            <div class="speed">Wind Speed : {{ weather_data.speed }}m/s {{weather_data.direction}}</div>
+            <div class="description">Description: {{ weather_data.description }}</div>
+           <div class="icon"><img id="weather-icon" alt="Weather Icon" src='{{ weather_data.icon }}'></div>
+           {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    
+</body>
+</html>
